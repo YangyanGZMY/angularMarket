@@ -1,6 +1,27 @@
 <div>
-<!--  <mat-card style="width: 100%; height: 100%;">-->
-<!--    memeber card-->
-<!--  </mat-card>-->
-  <button nz-button [nzType]="'primary'">测试按钮</button>
+  <nz-card>
+    <button nz-button [nzType]="'primary'" (click)="test()">测试按钮</button>
+    <nz-table #basicTable [nzData]="listOfData">
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Address</th>
+        <th>Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let data of basicTable.data">
+        <td>{{ data.name }}</td>
+        <td>{{ data.age }}</td>
+        <td>{{ data.address }}</td>
+        <td>
+          <a>Action 一 {{ data.name }}</a>
+          <nz-divider nzType="vertical"></nz-divider>
+          <a>Delete</a>
+        </td>
+      </tr>
+      </tbody>
+    </nz-table>
+  </nz-card>
 </div>

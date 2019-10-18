@@ -1,13 +1,17 @@
 <div>
-  <mat-grid-list cols="3" rowHeight="800px">
-    <mat-grid-tile>
-      <app-member style="width: 100%;"></app-member>
-    </mat-grid-tile>
-    <mat-grid-tile>
-      <app-convert></app-convert>
-    </mat-grid-tile>
-    <mat-grid-tile>
-      <app-convert></app-convert>
-    </mat-grid-tile>
-  </mat-grid-list>
+  <div class="gutter-example">
+    <div nz-row nzGutter="16">
+      <div nz-col class="gutter-row" nzSpan="8">
+        <div class="gutter-box">
+          <app-member style="width: 100%;"></app-member>
+        </div>
+      </div>
+      <div nz-col class="gutter-row" nzSpan="8">
+        <div class="gutter-box">integral</div>
+      </div>
+      <div nz-col class="gutter-row" nzSpan="8">
+        <div class="gutter-box">convert</div>
+      </div>
+    </div>
+  </div>
 </div>
