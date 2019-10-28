@@ -33,7 +33,9 @@ export class MemberComponent implements OnInit {
   }
 
   private test() {
-    const data = this.httpService.get('/api/member/autocomplete');
+    const data = this.httpService.get('/api/member/autocomplete').subscribe((result) => {
+      console.log(result);
+    })
     console.log(data);
   }
 }

@@ -18,14 +18,12 @@ export class HttpClientUtil {
   private baseUrl: any;
 
   constructor(private httpClient: HttpClient) {
-
-    this.baseUrl = 'http://localhost:9001';
-
+    // this.baseUrl = 'http://localhost:4200';
   }
 
   public get(url: string) {
     console.log('发送get请求，url：', url);
-    url = this.baseUrl + url;
+    // url = this.baseUrl + url;
     console.log(url)
     return this.httpClient.get(url, options).pipe(map(this.extractData), catchError(this.handleError));
   }
@@ -87,13 +85,9 @@ export class HttpClientUtil {
 
 
   private extractData(response: Response) {
-
-    console.log('提取数据：', response);
-
-    const data = response.json();
-
+    // console.log('提取数据：', response);
+    const data = response;
     return data || {};
-
   }
 
 
@@ -104,7 +98,7 @@ export class HttpClientUtil {
 
     if (error instanceof Response) {
 
-      const data = error.json() || '';
+      const data = error || '';
 
       const err = data.toString || JSON.stringify(data);
 
@@ -115,11 +109,8 @@ export class HttpClientUtil {
       errMsg = error.message ? error.message : error.toString();
 
     }
-
-    console.error('异常处理：', errMsg);
-
+    // console.log('异常处理：', errMsg);
     return Observable.throw(errMsg);
-
   }
 
 }
