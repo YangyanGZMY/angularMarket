@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {HttpClientUtil} from '../../core/HttpClientUtil';
+import { HttpClientUtil } from '../../core/HttpClientUtil';
+import { HttpEvent } from '@angular/common/http';
 
 @Component({
   selector: 'app-member',
@@ -9,33 +10,38 @@ import {HttpClientUtil} from '../../core/HttpClientUtil';
 export class MemberComponent implements OnInit {
   constructor(private httpService: HttpClientUtil) {}
 
-  listOfData = [
-    {
-      key: '1',
-      name: 'John Brown',
-      age: 32,
-      address: 'New York No. 1 Lake Park'
-    },
-    {
-      key: '2',
-      name: 'Jim Green',
-      age: 42,
-      address: 'London No. 1 Lake Park'
-    },
-    {
-      key: '3',
-      name: 'Joe Black',
-      age: 32,
-      address: 'Sidney No. 1 Lake Park'
-    }
-  ];
+  listOfData = [];
+  inputValue: string;
+  filteredOptions: string[] = [];
   ngOnInit() {
+    this.test(18);
+    this.getInputValue(this.listOfData);
   }
 
-  private test() {
-    const data = this.httpService.get('/api/member/autocomplete').subscribe((result) => {
-      console.log(result);
-    })
+  private test(phone) {
+    const data = this.httpService.get('/api/member/autocomplete?phone=' + phone)
+      .subscribe((response: HttpEvent<any>) => {
+      console.log(response);
+      if ((response as any).msg === 'success') {
+        this.listOfData = (response as any).result;
+        (response as any).result.forEach(item => {
+          this.filteredOptions.push('123');
+        });
+      }
+
+      }) as any;
     console.log(data);
+  }
+
+  onChange(value: string): void {
+    // this.test();
+    // this.filteredOptions = this.listOfData.filter(option => option.memberPhone.indexOf(value) !== -1 );
+    // this.getInputValue(this.filteredOptions);
+    // console.log(this.filteredOptions);
+  }
+  getInputValue(list: any): void {
+    this.filteredOptions = list.forEach(item => {
+      this.filteredOptions.push(item.value);
+    });
   }
 }
