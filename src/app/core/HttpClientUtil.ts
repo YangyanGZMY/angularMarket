@@ -30,13 +30,11 @@ export class HttpClientUtil {
 
   public post(url: string, params?: any) {
 
-    console.log('发送post请求，url：', url, '，params:', params);
+    console.log('发送post请求，url：', url, 'params:', params);
 
-    url = this.baseUrl + url;
+    // url = this.baseUrl + url;
 
-    return this.httpClient.post(url, params, options)
-
-      .pipe(map(this.extractData), catchError(this.handleError));
+    return this.httpClient.post(url, params, options).pipe(map(this.extractData), catchError(this.handleError));
 
   }
 

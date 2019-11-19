@@ -17,7 +17,7 @@ import { MemberComponent } from './views/member/member.component';
 // 注册语言包
 import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 registerLocaleData(zh);
 
 @NgModule({
@@ -39,7 +39,8 @@ registerLocaleData(zh);
     MatGridListModule,
     NgZorroAntdModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     {

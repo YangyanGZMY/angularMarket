@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClientUtil } from '../../core/HttpClientUtil';
 import { HttpEvent } from '@angular/common/http';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-member',
@@ -8,40 +9,67 @@ import { HttpEvent } from '@angular/common/http';
   styleUrls: ['./member.component.scss']
 })
 export class MemberComponent implements OnInit {
-  constructor(private httpService: HttpClientUtil) {}
+  constructor(private httpService: HttpClientUtil,
+              private fb: FormBuilder) {}
 
+  filteredOptions = [];
   listOfData = [];
   inputValue: string;
-  filteredOptions: string[] = [];
+  isVisible = false;
+  validateForm: FormGroup;
   ngOnInit() {
-    this.test(18);
-    this.getInputValue(this.listOfData);
+    this.test('');
+    this.validateForm = this.fb.group({
+      name: [null, [Validators.required]],
+      phone: [null, [Validators.required]]
+    });
   }
 
   private test(phone) {
-    const data = this.httpService.get('/api/member/autocomplete?phone=' + phone)
+    this.httpService.get('/api/member/autocomplete?phone=' + phone)
       .subscribe((response: HttpEvent<any>) => {
       console.log(response);
       if ((response as any).msg === 'success') {
         this.listOfData = (response as any).result;
+        this.filteredOptions = [];
         (response as any).result.forEach(item => {
-          this.filteredOptions.push('123');
+          this.filteredOptions.push(item.value);
         });
       }
-
-      }) as any;
-    console.log(data);
+      });
   }
 
   onChange(value: string): void {
-    // this.test();
-    // this.filteredOptions = this.listOfData.filter(option => option.memberPhone.indexOf(value) !== -1 );
-    // this.getInputValue(this.filteredOptions);
-    // console.log(this.filteredOptions);
+    // @ts-ignore
+    if (value.indexOf('(') !== -1) {
+      // @ts-ignore
+      const index = value.lastIndexOf('(');
+      value = value.substring(index + 1, value.length - 1);
+      this.inputValue = value;
+    }
+    this.test(value);
   }
-  getInputValue(list: any): void {
-    this.filteredOptions = list.forEach(item => {
-      this.filteredOptions.push(item.value);
-    });
+
+  addMember(): void {
+    this.isVisible = true;
+  }
+
+  handleOk(): void {
+    console.log('Button ok clicked!');
+    console.log(this.validateForm.controls.name.value);
+    const params = {
+      name: this.validateForm.controls.name.value,
+      phone: this.validateForm.controls.phone.value,
+    };
+    this.httpService.post('/api/member/add', params)
+      .subscribe((response: HttpEvent<any>) => {
+        console.log(response);
+      });
+    this.isVisible = false;
+  }
+
+  handleCancel(): void {
+    console.log('Button cancel clicked!');
+    this.isVisible = false;
   }
 }

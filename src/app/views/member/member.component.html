@@ -1,6 +1,12 @@
 <div>
   <nz-card>
-<!--    <button nz-button [nzType]="'primary'" (click)="test()">测试按钮</button>-->
+    <div>
+      <span class="memberTitle">会员中心</span>
+      <Button nz-button [nzType]="'primary'" (click)="addMember('')" class="memberBtn">
+        <i nz-icon [nzType]="'user-add'" [nzTheme]="'outline'"></i>注册
+      </Button>
+    </div>
+    <nz-divider></nz-divider>
     <div>
       <input
         placeholder="请输入手机号码"
@@ -28,4 +34,20 @@
       </tbody>
     </nz-table>
   </nz-card>
+  <nz-modal [(nzVisible)]="isVisible" nzTitle="注册会员" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+    <form nz-form [formGroup]="validateForm">
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">姓名</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid E-mail!">
+          <input nz-input formControlName="name" id="name" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="phone">电话</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid E-mail!">
+          <input nz-input formControlName="phone" id="phone" />
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </nz-modal>
 </div>
