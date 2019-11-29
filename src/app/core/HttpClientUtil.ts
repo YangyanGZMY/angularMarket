@@ -3,13 +3,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
-
-
 const options = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
 }
-
-
 
 @Injectable()
 
@@ -17,9 +13,7 @@ export class HttpClientUtil {
 
   private baseUrl: any;
 
-  constructor(private httpClient: HttpClient) {
-    // this.baseUrl = 'http://localhost:4200';
-  }
+  constructor(private httpClient: HttpClient) {}
 
   public get(url: string) {
     console.log('发送get请求，url：', url);
@@ -29,13 +23,8 @@ export class HttpClientUtil {
   }
 
   public post(url: string, params?: any) {
-
     console.log('发送post请求，url：', url, 'params:', params);
-
-    // url = this.baseUrl + url;
-
     return this.httpClient.post(url, params, options).pipe(map(this.extractData), catchError(this.handleError));
-
   }
 
 

@@ -38,14 +38,21 @@
     <form nz-form [formGroup]="validateForm">
       <nz-form-item>
         <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">姓名</nz-form-label>
-        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid E-mail!">
-          <input nz-input formControlName="name" id="name" />
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="姓名不能为空！">
+          <input nz-input formControlName="name" placeholder="Please input your name" id="name" />
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
         <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="phone">电话</nz-form-label>
-        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid E-mail!">
-          <input nz-input formControlName="phone" id="phone" />
+        <nz-form-control
+          nzHasFeedback
+          [nzValidateStatus]='phoneValidate'
+          nzValidatingTip="请输入电话号码"
+          nzWarningTip="请输入完整电话号码"
+          nzErrorTip="该电话号码已存在"
+          [nzSm]="14"
+          [nzXs]="24">
+          <input nz-input formControlName="phone" placeholder="Please input your phone" id="phone" />
         </nz-form-control>
       </nz-form-item>
     </form>
