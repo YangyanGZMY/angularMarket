@@ -34,7 +34,7 @@
       </tbody>
     </nz-table>
   </nz-card>
-  <nz-modal [(nzVisible)]="isVisible" nzTitle="注册会员" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+  <nz-modal [(nzVisible)]="isVisible" [nzMaskClosable]="false" nzTitle="注册会员" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
     <form nz-form [formGroup]="validateForm">
       <nz-form-item>
         <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">姓名</nz-form-label>
@@ -46,15 +46,29 @@
         <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="phone">电话</nz-form-label>
         <nz-form-control
           nzHasFeedback
-          [nzValidateStatus]='phoneValidate'
-          nzValidatingTip="请输入电话号码"
-          nzWarningTip="请输入完整电话号码"
-          nzErrorTip="该电话号码已存在"
+          nzValidatingTip="校验中..."
+          [nzErrorTip]="userErrorTpl"
           [nzSm]="14"
           [nzXs]="24">
           <input nz-input formControlName="phone" placeholder="Please input your phone" id="phone" />
+          <ng-template #userErrorTpl let-control>
+            <ng-container *ngIf="control.hasError('required')">
+              请输入电话号码!
+            </ng-container>
+            <ng-container *ngIf="control.hasError('duplicated')">
+              电话号码已存在！
+            </ng-container>
+            <ng-container *ngIf="control.hasError('completed')">
+              请示如正确电话号码！
+            </ng-container>
+          </ng-template>
         </nz-form-control>
       </nz-form-item>
+<!--      <nz-form-item>-->
+<!--        <nz-form-control>-->
+<!--          <button nz-button [nzType]="'primary'">Log in</button>-->
+<!--        </nz-form-control>-->
+<!--      </nz-form-item>-->
     </form>
   </nz-modal>
 </div>
